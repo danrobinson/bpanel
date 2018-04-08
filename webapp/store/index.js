@@ -9,11 +9,20 @@ import { getConstants } from '../plugins/plugins';
 import { loadPlugins, pluginMiddleware } from '../plugins/plugins';
 import * as reducers from './reducers';
 
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
 export default async () => {
   // load plugin information before setting up app and store
   await loadPlugins(config);
 
-  const rootReducer = combineReducers(reducers);
+  const persistConfig = {
+    key: 'root',
+    storage
+  };
+
+  const rootReducer = persistReducer(persistConfig, combineReducers(reducers));
+
   const middleware = [thunkMiddleware, pluginMiddleware, effects];
   let compose,
     debug = false;
@@ -35,5 +44,7 @@ export default async () => {
   }
 
   const store = createStore(rootReducer, compose);
+  let persistor = persistStore(store);
+
   return store;
 };

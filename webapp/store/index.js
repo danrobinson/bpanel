@@ -64,5 +64,7 @@ export default async () => {
   const store = createStore(rootReducer, compose);
   let persistor = persistStore(store);
 
+  persistor.purge();
+
   return store;
 };

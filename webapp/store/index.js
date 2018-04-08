@@ -9,12 +9,22 @@ import { getConstants } from '../plugins/plugins';
 import { loadPlugins, pluginMiddleware } from '../plugins/plugins';
 import * as reducers from './reducers';
 
+import { routerMiddleware } from 'react-router-redux';
+import createHistory from 'history/createBrowserHistory';
+
+export const history = createHistory();
+
 export default async () => {
   // load plugin information before setting up app and store
   await loadPlugins(config);
 
   const rootReducer = combineReducers(reducers);
-  const middleware = [thunkMiddleware, pluginMiddleware, effects];
+  const middleware = [
+    thunkMiddleware,
+    pluginMiddleware,
+    routerMiddleware(history),
+    effects
+  ];
   let compose,
     debug = false;
 

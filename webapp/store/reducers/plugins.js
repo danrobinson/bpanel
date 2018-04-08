@@ -13,7 +13,7 @@ import Immutable from 'seamless-immutable';
 import { decorateReducer } from '../../plugins/plugins';
 import { ADD_PLUGIN } from '../constants/plugins';
 
-const initialState = Immutable({});
+const initialState = {};
 
 const plugins = (state = initialState, action) => {
   switch (action.type) {

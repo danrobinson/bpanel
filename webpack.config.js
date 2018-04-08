@@ -63,7 +63,8 @@ module.exports = function(env = {}) {
       alias: {
         bcoin: path.resolve(__dirname, 'node_modules/bcoin/lib/bcoin-browser'),
         '@bpanel': path.resolve(__dirname, 'node_modules/@bpanel'),
-        tinycolor: 'tinycolor2'
+        tinycolor: 'tinycolor2',
+        react: path.resolve(__dirname, 'node_modules/react')
       }
     },
     module: {
@@ -95,7 +96,7 @@ module.exports = function(env = {}) {
           })
         },
         {
-          test: /\.(png|jpg|gif)$/,
+          test: /\.(eot|woff|woff2|svg|ttf|png|jpg|gif)$/,
           use: [
             {
               loader: 'file-loader',

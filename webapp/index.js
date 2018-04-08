@@ -1,18 +1,19 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
+import { ConnectedRouter, routerMiddleware } from 'react-router-redux';
 
-import getStore from './store';
+import getStore, { history } from './store';
 import App from './containers/App/App';
 
 (async () => {
   const store = await getStore();
   render(
     <Provider store={store}>
-      <Router>
+      <ConnectedRouter history={history}>
         <Route component={App} />
-      </Router>
+      </ConnectedRouter>
     </Provider>,
     document.getElementById('app')
   );

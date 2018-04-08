@@ -59,6 +59,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-persist": "^5.9.1",
+    "redux-persist-seamless-immutable": "^1.0.1",
     "redux-thunk": "^2.2.0",
     "seamless-immutable": "^7.1.2",
     "semver": "^5.5.0",

@@ -14,17 +14,34 @@ import createHistory from 'history/createBrowserHistory';
 
 export const history = createHistory();
 
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
+
+import {
+  seamlessImmutableReconciler,
+  seamlessImmutableTransformer
+} from 'redux-persist-seamless-immutable';
+
 export default async () => {
   // load plugin information before setting up app and store
   await loadPlugins(config);
 
-  const rootReducer = combineReducers(reducers);
+  const persistConfig = {
+    key: 'root',
+    storage,
+    stateReconciler: seamlessImmutableReconciler,
+    transforms: [seamlessImmutableTransformer]
+  };
+
+  const rootReducer = persistReducer(persistConfig, combineReducers(reducers));
+
   const middleware = [
     thunkMiddleware,
     pluginMiddleware,
     routerMiddleware(history),
     effects
   ];
+
   let compose,
     debug = false;
 
@@ -45,5 +62,7 @@ export default async () => {
   }
 
   const store = createStore(rootReducer, compose);
+  let persistor = persistStore(store);
+
   return store;
 };
